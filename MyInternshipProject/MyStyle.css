@@ -1,0 +1,72 @@
+.Margin-Top{
+    margin-top: 110px;
+}
+.Margin-Top1{
+    margin-top: 35px;
+}
+.Mycolor{
+    background: linear-gradient(to right, #fefefe 0%, #9fcdff 100%);
+}
+.Hr{
+    height: 2px;
+    background: linear-gradient(to right, #fefefe 0%, #9fcdff 100%);
+}
+.Li{
+    list-style: none;
+}
+.ProgressTextColor{
+    color: black;
+}
+.cvColor
+{
+    color: darkblue;
+}
+.vl {
+    border-left: thick solid #9fcdff;
+
+}
+th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+td {
+    width: 250px;
+}
+.MyBtn{
+    background: linear-gradient(to right, #fefefe 0%, #9fcdff 100%);
+    display: inline-block;
+    border: none;
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+    transition-duration: 0.4s;
+    overflow: hidden;
+    box-shadow: 0 5px 15px #f1b0b7;
+}
+.MyBtn:hover{
+    background: linear-gradient(to right, #fefefe 0%, #f1b0b7 100%);
+    box-shadow: 0px 2px 10px 5px #9fcdff;
+    color: #000;
+}
+.MyBtn:after{
+    content: "";
+    background: linear-gradient(to right, #fefefe 0%, #9fcdff 100%);
+    display: block;
+    position: absolute;
+    padding-top: 200%;
+    padding-left: 300%;
+    margin-top: -110%;
+    opacity: 0;
+    transition: all 0.8s
+}
+.MyBtn:active:after{
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+.MyBtn:focus { outline:0; }

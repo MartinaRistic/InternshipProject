@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FINKI CODERS</title>
+    <style>
+        .grid{
+            padding: 10px;
+            border: 1px solid black;
+
+        }
+        #container
+        {
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+        table,tr,td{
+            border: 1px solid black;
+            cursor: pointer;
+        }
+    </style>
+    <script src="jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <script src="jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="jquery-ui.theme.min.css">
+</head>
+<body>
+    <div id="container">
+        <div class="grid">
+            <h1>Finki Coders</h1>
+            <label>Име: </label><input type="text" id="ime"><small> внесете го вашето име</small><br><br>
+            <label>Презиме: </label><input type="text" id="prezime"><small> внесете го вашето презиме</small><br><br>
+            <label>Матичен број: </label><input type="text" id="maticen"><small> внесете го вашиот матичен број мој мора да содржи 14 бројки</small><br><br>
+            <label for="pozicija">Работна позиција:</label>
+            <select name="pozicija" id="pozicija">
+                <option>Програмер</option>
+                <option>Тестер</option>
+                <option>Менаџер</option>
+            </select>
+            <small>Изберете ја вашата работна позиција</small><br><br>
+            <label>Датум:</label><input type="text" id="date"><small>Внесете го денешниот датум</small><br><br>
+            <button id="button">ADD</button>
+        </div>
+        <div class="grid">
+            <h1>Додавање во табела:</h1>
+            <table id="tabela">
+                <tr>
+                    <td>Име</td>
+                    <td>Презиме</td>
+                    <td>Матичен Број</td>
+                    <td>Работна Позиција</td>
+                    <td>Датум</td>
+                    <td>Копче</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#date").datepicker();
+        $("#button").click(function () {
+            var name=$("#ime").val();
+            var surname=$("#prezime").val();
+            var maticen=$("#maticen").val();
+            var pozicija=$("#pozicija").val();
+            var data=$("#date").val();
+            if(maticen.length!=14)
+            {
+                alert("Немате внесено точен матичен број");
+            }
+            else
+            {
+                console.log(pozicija);
+                var tabela=$(`<tr><td>${name}</td><td>${surname}</td><td>${maticen}</td><td>${pozicija}</td><td>${data}</td><td><button id="confirm" style="visibility: hidden">Confirm</button><button id="remove" style="visibility: hidden">Remove</button></td></tr>`);
+                $("#tabela").append(tabela);
+
+                $("#ime").val("");
+                $("#prezime").val("");
+                $("#maticen").val("");
+                $("#pozicija").val("");
+                $("#date").val("");
+                //console.log($(tabela).children().children("#confirm"));
+                $(tabela).mouseover(function () {
+                    $(tabela).children().children("#confirm").css({
+                        "visibility": "visible"
+                    });
+                    $(tabela).children().children("#remove").css({
+                        "visibility": "visible"
+                    });
+                });
+                $(tabela).mouseout(function () {
+                    $(tabela).children().children("#confirm").css({
+                        "visibility": "hidden"
+                    });
+                    $(tabela).children().children("#remove").css({
+                        "visibility": "hidden"
+                    });
+                });
+
+            }
+
+
+
+        });
+        $(document).on('click','#remove', function () {
+            $(this).parent().parent().remove();
+        });
+        $(document).on('click','#confirm', function () {
+            $(this).parent().parent().css({
+                "background": "green"
+            });
+            $(this).attr("disabled",true);
+            $(this).siblings().attr("disabled",true);
+
+        });
+    });
+</script>
+</html>

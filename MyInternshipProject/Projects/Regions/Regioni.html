@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Региони</title>
+    <script src="jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <script src="jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="jquery-ui.theme.min.css">
+    <style>
+        .grid-container{
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+        .grid-item{
+            font-size: 20px;
+            text-align: center;
+        }
+        li{
+            list-style: none;
+        }
+        .cursor{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <center><h1 class="ui-state-default">Геогравски региони во светот</h1></center>
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2 class="ui-state-default">Региони</h2>
+            <ul id="Regions" class="droptrue">
+                <li class="continent cursor ui-state-default" id="Americas">Americas</li>
+                <li class="continent cursor ui-state-default" id="Asia">Asia</li>
+                <li class="continent cursor ui-state-default" id="Africa">Africa</li>
+                <li class="continent cursor ui-state-default" id="Europe">Europe</li>
+                <li class="continent cursor ui-state-default" id="Oceania">Oceania</li>
+            </ul>
+        </div>
+        <div class="grid-item">
+            <h2 class="ui-state-default">Држави</h2>
+            <ul id="Countries" class="cursor connectedSortable dropfalse">
+
+            </ul>
+        </div>
+        <div class="grid-item">
+            <h2 class="ui-state-default">Омилени</h2>
+            <ul id="Favorites" class="connectedSortable droptrue">
+
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    continentArray=[];
+    $(document).ready(function () {
+        $(".continent").on('click',function () {
+            var continent=$(this).attr('id');
+            console.log(continent);
+            Api="https://restcountries.eu/rest/v2/region/"+continent;
+            var continentChild=continent+"Child";
+            var continentCountries=continent+"Countries"
+            if(!continentArray.includes(continent))
+            {
+                $.ajax({
+                    data: 'GET',
+                    url: Api,
+                    dataType: "json",
+                    success: function (data) {
+                        $.each(data,function (i,item) {
+                            var name=item.name;
+                            var alpha=item.alpha2Code;
+                            var region=item.subregion;
+                            var area=item.area;
+                            var flag=item.flag;
+                            $("#Countries").append(`<ul class="${continentCountries}"><li class="ui-state-default"><h3>${name}</h3></li></ul><ul class="${continentChild}"><li class="ui-state-default">${alpha}</li><li class="ui-state-default">${region}</li><li class="ui-state-default">${area}</li><li class="ui-state-default"><img src="${flag}" width="45px" height="35px"/></li></ul>`);
+                        });
+                        $("."+continentChild).hide();
+                        $("."+continentCountries).bind('click', function () {
+                            $(this).next("."+continentChild).toggle();
+                        });
+                    }
+                });
+                continentArray.push(continent);
+            }
+            else
+            {
+                $("."+continentChild).hide();
+                $("."+continentCountries).toggle();
+            }
+        });
+    });
+    $( function() {
+        $( "ul.droptrue" ).sortable({
+            connectWith: "ul"
+        });
+
+        $( "ul.dropfalse" ).sortable({
+            connectWith: "ul",
+            dropOnEmpty: false
+        });
+
+        $( "#Regions, #Countries, #Favorites" ).disableSelection();
+    } );
+</script>
+</html>
